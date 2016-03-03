@@ -165,7 +165,7 @@ function InlinePanel(opts) {
                 var currentChildOrder = currentChildOrderElem.val();
 
                 /* find the previous visible 'inline_child' li before this one */
-                var prevChild = currentChild.prev(':visible');
+                var prevChild = currentChild.prev(':not(.deleted)');
                 if (!prevChild.length) return;
                 var prevChildOrderElem = prevChild.find('input[name$="-ORDER"]');
                 var prevChildOrder = prevChildOrderElem.val();
@@ -186,7 +186,7 @@ function InlinePanel(opts) {
                 var currentChildOrder = currentChildOrderElem.val();
 
                 /* find the next visible 'inline_child' li after this one */
-                var nextChild = currentChild.next(':visible');
+                var nextChild = currentChild.next(':not(.deleted)');
                 if (!nextChild.length) return;
                 var nextChildOrderElem = nextChild.find('input[name$="-ORDER"]');
                 var nextChildOrder = nextChildOrderElem.val();
@@ -220,7 +220,7 @@ function InlinePanel(opts) {
 
     self.updateMoveButtonDisabledStates = function() {
         if (opts.canOrder) {
-            var forms = self.formsUl.children('li:visible');
+            var forms = self.formsUl.children('li:not(.deleted)');
             forms.each(function(i) {
                 $('ul.controls .inline-child-move-up', this).toggleClass('disabled', i === 0).toggleClass('enabled', i !== 0);
                 $('ul.controls .inline-child-move-down', this).toggleClass('disabled', i === forms.length - 1).toggleClass('enabled', i != forms.length - 1);
@@ -230,7 +230,7 @@ function InlinePanel(opts) {
 
     self.updateAddButtonState = function() {
         if (opts.maxForms) {
-            var forms = self.formsUl.children('li:visible');
+            var forms = self.formsUl.children('li:not(.deleted)');
             var addButton = $('#' + opts.formsetPrefix + '-ADD');
 
             if (forms.length >= opts.maxForms) {
@@ -243,7 +243,7 @@ function InlinePanel(opts) {
 
     self.animateSwap = function(item1, item2) {
         var parent = self.formsUl;
-        var children = parent.children('li:visible');
+        var children = parent.children('li:not(.deleted)');
 
         // Apply moving class to container (ul.multiple) so it can assist absolute positioning of it's children
         // Also set it's relatively calculated height to be an absolute one, to prevent the container collapsing while its children go absolute
